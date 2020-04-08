@@ -46,6 +46,24 @@ body {
     color: black;
 }
 
+.flexbox-dice {
+    width: 75%;
+    background-color: #ffffff;
+    border: 3px solid #272727;
+    color: #000000;
+    font-size: 2em;
+    padding: 20px;
+    margin: 10px;
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    max-width: 50px;
+    display: inline-block;
+    margin-left: 20px;
+    text-align: center;
+    color: black;
+}
+
 .item-00 {
     min-height: 90px;
     min-width: 90px;
@@ -85,7 +103,7 @@ body {
 
 .active {
     border: 3px solid #fff000;
-    background-image: url("oie.png");
+    background-image: url("../imgs/skin_2.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
