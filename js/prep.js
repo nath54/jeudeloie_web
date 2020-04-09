@@ -76,9 +76,11 @@ function jouer(){
     txt="oie.html?"
     js=ljs;
     for(x=1;x<len;x++){
-        txt+="name="+document.getElementById("name"+x).value+",";
+        var jnom=document.getElementById("name"+x).value
+        jnom=jnom.replace("&"," et ");
+        txt+="name="+jnom+",";
         txt+="img="+document.getElementById("img"+x).src;
-        txt+="|";
+        txt+="&";
     }
     Javascript:window.open(txt);
 }

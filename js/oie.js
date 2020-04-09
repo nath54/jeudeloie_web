@@ -8,12 +8,32 @@ var gagne = false;
 var nblances = 0;
 
 var joueurs=[];
+var jact=0;
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
+}
+
+function init_joueurs(){
+    var parameters = location.search.substring(1).split("&");
+    for(p of parameters){
+        var jj={name:"player",img:"img/skin_01.png",case:0};
+        var pjs=p.split(",");
+        for(pp of pjs){
+            var ppp=pp.split("=");
+            if(ppp[0]=="name"){
+                jj.name=ppp[1];
+            }
+            else if(ppp[0]=="img"){
+                jj.img=ppp[1];
+            }
+        }
+        joueurs.push(jj);
+    }
+}
 
 function initialisation() {
+    
     for (x = 0; x <= 63; x++) {
         xx = (x < 10 ? '0' : '') + x;
         var c = document.getElementById("item-" + xx);
