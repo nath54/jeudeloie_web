@@ -80,6 +80,7 @@ function lancer_des(){
     var td=randint(1,10);
     var vd1=parseInt(randint(1,6));
     var vd2=parseInt(randint(1,6));
+    var av=0;
     document.getElementById("dé1").innerHTML=vd1;
     document.getElementById("dé2").innerHTML=vd2;
     function boucle(){
@@ -93,9 +94,12 @@ function lancer_des(){
                 if(vd1>6){vd1=1}
                 vd2++;
                 if(vd2>6){vd2=1}
-                td+=dtt.getTime()**2;
+                td+=av;
+                av+=1;
             }
-            window.requestAnimationFrame(boucle);
+            sleep(td).then(() => {
+                window.requestAnimationFrame(boucle);
+            })
         }
         else{
             //alert("lancer du dé : "+vd1+" "+vd2);
