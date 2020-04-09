@@ -101,9 +101,7 @@ function deplacement_oie(caseActive,nb_tot,pas=1){
             })
         }
     }
-    
     window.requestAnimationFrame(boucle_dep);
-    
 }
     
 

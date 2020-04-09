@@ -9,13 +9,14 @@
 <body>
     <div id="joueurs">
         <div class="user" id="j1">
-            <img id="sk1" src="imgs/skin_1.png"></img>
+            <img class="img_oie" id="img1" src="imgs/skin_1.png" onclick="change_img(1);"></img>
             <h2>Pseudo : </h2><input id="name1" type="text" value="player1"></input>
         </div>
     </div>
-    <button id="addj">Ajouter un joueur</button>
-    <button id="remj">Enlever un joueur</button>
+    <button id="addj" onclick="new_joueur();">Ajouter un joueur</button>
+    <button id="remj" onclick="remove_joueur();">Enlever un joueur</button>
     <button id="jouer" onClick="jouer();">Jouer !</button>
+    <script src="js/prep.js" type="text/javascript"></script>
 </body>
 
 </html>

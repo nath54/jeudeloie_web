@@ -32,30 +32,33 @@ button {
     -o-border-radius: 20px;
 }
 
-#titre {
-    width: 50%;
-    height: 20%;
-    background-image: url("../imgs/btn_1_1.png");
+.img_oie{
+    width:100px;
+    height:100px;
+    border:2px solid black;
+    border-radius:10px;
+    background-color: rgba(20, 20, 20, 0.5);
 }
 
-#titre:hover {
-    background-image: url("../imgs/btn_1_2.png");
+.user{
+    border:2px solid black;
+    border-radius:10px;
+    background-color: antiquewhite;
+    max-width:300px;
+    max-height:300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: inline-block;
 }
 
-#titre:active {
-    background-image: url("../imgs/btn_1_3.png");
+.joueurs{
+    display: flex;
+    flex-direction: row;
 }
 
-#credits {
-    width: 40%;
-    height: 15%;
-    background-image: url("../imgs/btn_2_1.png");
-}
-
-#credits:hover {
-    background-image: url("../imgs/btn_2_2.png");
-}
-
-#credits:active {
-    background-image: url("../imgs/btn_2_3.png");
-}
