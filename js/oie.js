@@ -7,10 +7,11 @@ var caseActive = 0;
 var gagne = false;
 var nblances = 0;
 
+var joueurs=[];
+
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
-  
 
 function initialisation() {
     for (x = 0; x <= 63; x++) {
