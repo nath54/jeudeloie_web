@@ -75,12 +75,15 @@ function jouer(){
     }
     txt="oie.html?"
     js=ljs;
-    for(x=1;x<len;x++){
-        var jnom=document.getElementById("name"+x).value
+    x=1;
+    for(j of ljs){
+        var jnom=document.getElementById("name"+x).value;
+        var jimg=document.getElementById("img"+x).src;
         jnom=jnom.replace("&"," et ");
         txt+="name="+jnom+",";
-        txt+="img="+document.getElementById("img"+x).src;
+        txt+="img="+jimg;
         txt+="&";
+        x++;
     }
     Javascript:window.open(txt);
 }

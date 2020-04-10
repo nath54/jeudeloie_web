@@ -2,7 +2,18 @@
 CSS BY NATH54
 No Copyrights ;)
 */
-
+html,
+body {
+  width: 100%;
+  height: 98%;
+}
+body {
+    background-color: #8e44ad;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+  }
+  
 body {
     width: 100%;
     height: 100%;
@@ -16,35 +27,7 @@ body {
     margin-right: auto;
 }
 
-.flexbox-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    /* background-color: #00652f; */
-    background: linear-gradient( to bottom, #5d9634, #5d9634 50%, #538c2b 50%, #538c2b);
-    background-size: 100% 25px;
-    border: 3px solid #272727;
-    color: #ffffff;
-}
 
-.flexbox-item {
-    width: 75%;
-    background-color: #ff652f;
-    border: 3px solid #272727;
-    color: #ffffff;
-    font-size: 2em;
-    padding: 20px;
-    margin: 10px;
-    min-height: 50px;
-    min-width: 50px;
-    max-height: 100px;
-    max-width: 100px;
-    display: inline-block;
-    margin-left: 20px;
-    text-align: center;
-    color: black;
-}
 
 .flexbox-dice {
     width: 75%;
@@ -54,42 +37,56 @@ body {
     font-size: 2em;
     padding: 20px;
     margin: 10px;
+    /*
     min-height: 50px;
     min-width: 50px;
     max-height: 50px;
     max-width: 50px;
+    */
+    width:100px;
+    height:100px;
     display: inline-block;
     margin-left: 20px;
     text-align: center;
     color: black;
 }
 
+.flexbox-item {
+    width: 100%;
+    background-color: #ff652f;
+    border: 3px solid #272727;
+    color: #ffffff;
+    font-size: 2em;
+    padding: 20px;
+    margin: 10px;
+    min-height: 70px;
+    min-width: 70px;
+    max-height: 100px;
+    max-width: 100px;
+    display: inline-block;
+    margin-left: 20px;
+    text-align: center;
+    color: black;
+}
+
+
 .item-00 {
-    min-height: 90px;
-    min-width: 90px;
-    max-height: 140px;
-    max-width: 140px;
+    min-height: 150px;
+    min-width: 150px;
+    max-height: 2000px;
+    max-width: 200px;
 }
 
-.item-01 {
-    min-height: 70px;
-    min-width: 70px;
-    max-height: 120px;
-    max-width: 120px;
+.item-01 , .item-02 , .item-03{
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 150px;
+    max-width: 150px;
 }
 
-.item-02 {
-    min-height: 70px;
-    min-width: 70px;
-    max-height: 120px;
-    max-width: 120px;
-}
-
-.item-03 {
-    min-height: 70px;
-    min-width: 70px;
-    max-height: 120px;
-    max-width: 120px;
+.item-06{
+    background: radial-gradient(rgba(0,0,0,0), rgba(0,250,250,1));
+    border-radius: 100%;
 }
 
 .fin{
@@ -107,13 +104,64 @@ body {
 }
 
 .active {
-    border: 3px solid #fff000;
     background-image: url("../imgs/skin_2.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
-.item-06{
-    background: radial-gradient(rgba(0,0,0,0), rgba(0,250,250,1));
-    border-radius: 100%;
+
+.flexbox-container {
+    /* background-color: #00652f; */
+    background: linear-gradient( to bottom, #5d9634, #5d9634 50%, #538c2b 50%, #538c2b);
+    background-size: 100% 25px;
+    border: 3px solid #272727;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    /*flex-wrap: wrap;*/
+    align-items: center;
+    position: relative;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height:70%;
+    float: none;
+    margin-left:20px;
+    margin-right:20px;
 }
+
+.img_portrait{
+    width:64px;
+    height:64px;
+    border:2px solid black;
+    border-radius:5px;
+}
+
+.joueur_aff{
+    border:2px solid black;
+    border-radius:5px;
+    margin:20px;
+    padding: 2px;
+}
+
+#joueurs{
+    height:220px;
+    border:2px solid black;
+    border-radius:5px;
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+    float: none;
+}
+
+.pion{
+    min-width: 15%;
+    min-height: 15%;
+    max-width: 50%;
+    max-height: 50%;
+    display:flex;
+    border:2px solid black;
+    border-radius: 10px;
+    background-color: rgba(30,30,30,0.6);
+}
+
+

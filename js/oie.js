@@ -10,17 +10,58 @@ var nblances = 0;
 var joueurs=[];
 var jact=0;
 
+var couleurs=[ "#123456" , "#654321" , "#465423" , "#872322"];
+
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+function update_aff_js(){
+    var dddd=document.getElementById("joueurs");
+    //DELETE
+    for(x=0;x<joueurs.length;x++){
+        var dd=document.getElementById("div_joueur_"+x);
+        if(dd!=null){
+            dddd.removeChild(dd);
+        }
+    }
+    //ADD
+    for(x=0;x<joueurs.length;x++){
+        var j = joueurs[x];
+        //
+        var dd=document.createElement("div");
+        var tt=document.createElement("h2");
+        var ii=document.createElement("img");
+        var pp=document.createElement("p");
+        //
+        dd.setAttribute("id","div_joueur_"+x);
+        dd.setAttribute("class","joueur_aff");
+        dd.style.borderColor=couleurs[x];
+        dd.style.borderWidth="5px";
+        
+        tt.innerHTML=j.name;
+        ii.setAttribute("src",j.img);
+        ii.setAttribute("class","img_portrait");
+        pp.innerHTML="case : "+j.case;
+        //
+        dd.appendChild(ii);
+        dd.appendChild(tt);
+        dd.appendChild(pp);
+        dddd.appendChild(dd);
+    }
+    var joj=joueurs[jact];
+    var tt=document.getElementById("tour_actu");
+    tt.innerHTML="Au tour de : "+joj.name;
 }
 
 function init_joueurs(){
     var parameters = location.search.substring(1).split("&");
     for(p of parameters){
-        var jj={name:"player",img:"img/skin_01.png",case:0};
+        var jj={name:null,img:null,case:0,actif:null};
         var pjs=p.split(",");
         for(pp of pjs){
             var ppp=pp.split("=");
+            //alert("ppp : "+ppp);
             if(ppp[0]=="name"){
                 jj.name=ppp[1];
             }
@@ -28,12 +69,26 @@ function init_joueurs(){
                 jj.img=ppp[1];
             }
         }
-        joueurs.push(jj);
+        if(jj.name!=null || jj.img!=null || jj.name!=undefined || jj.img!=undefined){
+            var ddiv = document.createElement("div");
+            ddiv.setAttribute("class","pion");
+            ddiv.style.borderColor=couleurs[joueurs.length];
+            ddiv.style.borderWidth="5px";
+            var ii=document.createElement("img");
+            ii.setAttribute("class","im_pion");
+            ii.setAttribute("src",jj.img);
+            ddiv.appendChild(ii);
+            jj.actif=ddiv
+            joueurs.push(jj);
+        }
     }
+    update_aff_js();
 }
 
+
+
 function initialisation() {
-    
+    init_joueurs();
     for (x = 0; x <= 63; x++) {
         xx = (x < 10 ? '0' : '') + x;
         var c = document.getElementById("item-" + xx);
@@ -45,13 +100,15 @@ function initialisation() {
         }
 
     }
-    var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
-    elementActif = document.getElementById("item-" + caseActiveChaine);
-    elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine + " active");
+    //var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
+    //elementActif = document.getElementById("item-" + caseActiveChaine);
+    //elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine + " active");
+    for(x=0;x<joueurs.length;x++){ make_actif(x); }
+    
 }
 
-function suppr_actif(caseActive){
-    var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
+function suppr_actif(idp){
+    /*var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
     if (caseActive >= 0 && caseActive <= 63) {
         //alert(caseActiveChaine);
     }
@@ -63,17 +120,53 @@ function suppr_actif(caseActive){
     }
     var elementActif = document.getElementById("item-" + caseActiveChaine);
     elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine);
+    */
+    var caseActiveChaine = (joueurs[idp].case < 10 ? '0' : '') + caseActive;
+    var elem=document.getElementById("item-"+caseActiveChaine);
+    try{
+        elem.removeChild(joueurs[idp].actif);
+    }
+    catch{
+
+    }
+
 }
 
-function make_actif(caseActive){
+function make_actif(idp){
+    /*
     if (caseActive >= 0) {
         caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
         elementActif = document.getElementById("item-" + caseActiveChaine);
         elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine + " active");
     };
+    */
+   var caseActiveChaine = (joueurs[idp].case < 10 ? '0' : '') + caseActive;
+   var elem=document.getElementById("item-"+caseActiveChaine);
+   elem.appendChild(joueurs[idp].actif);
 }
 
-function lancer_des(){
+
+function deplacement_oie(caseActive,nb_tot,pas=1){
+    var cc=caseActive;
+    console.log("deplacement oie( cA : "+cc+" , nb_tot : "+nb_tot+" , pas : "+pas);
+    
+    var nba=0;
+    function boucle_dep(){
+        nba+=pas;
+        suppr_actif(jact);
+        cc+=1;
+        make_actif(jact);
+        if(nba!=nb_tot){
+            sleep(300).then(() => {
+                window.requestAnimationFrame(boucle_dep);
+            })
+        }
+    }
+    window.requestAnimationFrame(boucle_dep);
+}
+
+
+async function lancer_des(){
     var dt=new Date();
     var dtt=new Date();
     var ad=dt.getTime();
@@ -83,6 +176,7 @@ function lancer_des(){
     var av=0;
     document.getElementById("dé1").innerHTML=vd1;
     document.getElementById("dé2").innerHTML=vd2;
+    document.getElementById("finitde").innerHTML="lancés..."
     function boucle(){
         if(td<1000){
             dt=new Date();
@@ -95,50 +189,73 @@ function lancer_des(){
                 vd2++;
                 if(vd2>6){vd2=1}
                 td+=av;
-                av+=1;
+                av+=randint(1,5);
             }
             sleep(td).then(() => {
                 window.requestAnimationFrame(boucle);
             })
         }
         else{
-            //alert("lancer du dé : "+vd1+" "+vd2);
+            document.getElementById("finitde").innerHTML="pas lancés"
+            return vd1,vd2;
         }
     }
-    window.requestAnimationFrame(boucle);
-    return vd1,vd2
+    boucle();
 }
 
-function deplacement_oie(caseActive,nb_tot,pas=1){
-    var cc=caseActive;
-    console.log("deplacement oie( cA : "+cc+" , nb_tot : "+nb_tot+" , pas : "+pas);
-    
-    var nba=0;
-    function boucle_dep(){
-        nba+=pas;
-        suppr_actif(cc);
-        cc+=1;
-        make_actif(cc);
-        if(nba!=nb_tot){
-            sleep(300).then(() => {
-                window.requestAnimationFrame(boucle_dep);
-            })
-        }
-    }
-    window.requestAnimationFrame(boucle_dep);
-}
-    
 
-var fonction_1 = function(de1=null,de2=null) {
+
+async function jeu(){
+    await lancer_des();
+    var de1=parseInt(document.getElementById("dé1").innerHTML)
+    var de2=parseInt(document.getElementById("dé2").innerHTML)
+    alert(de1+" "+de2);
+    nblances++;
+    document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
+    document.getElementById("nblancers").innerHTML = nblances;
+    fonction_1(de1,de2);
+}
+
+ /*
+const jeu = async () => {
+    const result = await lancer_des();
+    // do something else here after firstFunction completes
+    var de1=parseInt(document.getElementById("dé1").innerHTML)
+    var de2=parseInt(document.getElementById("dé2").innerHTML)
+    alert(de1+" "+de2);
+    nblances++;
+    document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
+    document.getElementById("nblancers").innerHTML = nblances;
+    fonction_1(de1,de2);
+ }
+ */
+
+/*
+function jeu()
+{
+    var promise = lancer_des();
+    promise.then(function(result) { 
+        var de1=parseInt(document.getElementById("dé1").innerHTML)
+        var de2=parseInt(document.getElementById("dé2").innerHTML)
+        alert(de1+" "+de2);
+        nblances++;
+        document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
+        document.getElementById("nblancers").innerHTML = nblances;
+        fonction_1(de1,de2);
+    });
+}
+*/
+
+
+
+
+
+
+function fonction_1(de1=null,de2=null){
     if (!gagne) {
         if(de1==null || de2==null){
-            lancer_des();
-            de1=parseInt(document.getElementById("dé1").innerHTML)
-            de2=parseInt(document.getElementById("dé2").innerHTML)
-            alert(de1+" "+de2);
-            nblances++;
-            document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
-            document.getElementById("nblancers").innerHTML = nblances;
+            de1=0;
+            de2=0;
         }
         var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
         if (nblances == 0 && de1 + de2 == 9) {
@@ -170,7 +287,7 @@ var fonction_1 = function(de1=null,de2=null) {
         //console.log("caseActive : " + caseActive)
         if (caseActive <= 63) {
             // On recherche le nouvel élément actif.
-            //make_actif(caseActive);
+            //make_actif(jact);
             //console.log(" caseActiveChaine : "+caseActiveChaine);
         } else {
             elementActif = document.getElementById("item-63");
@@ -179,6 +296,9 @@ var fonction_1 = function(de1=null,de2=null) {
     } else {
         alert("Vous avez gagné la partie, pour en recommencer une nouvelle, veuillez recharger la page");
     }
+    jact++;
+    if(jact>=joueurs.length){ jact=0; }
+    update_aff_js();
 };
 
 var fonction_2 = function() {

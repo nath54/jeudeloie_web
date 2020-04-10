@@ -9,7 +9,7 @@
 <body>
 
     <p>
-        <button onclick="fonction_1()">Lancer les dés</button> &nbsp;&nbsp;
+        <button onclick="jeu()">Lancer les dés</button> &nbsp;&nbsp;
         nombre de lancers:
         <span id="nblancers">0</span>
         résultat:
@@ -18,15 +18,17 @@
         <span id="caseActive">0</span>
     </p>
 
+    <h1 id="tour_actu">Au tour de : joeur</h1>
+
     <div id="dé1" class="flexbox-dice dice1">0</div>
     <div id="dé2" class="flexbox-dice dice2">0</div>
-
+    <p id="finitde"></p>
     <div id="joueurs">
-
+        
     </div>
 
     <div class="flexbox-container">
-        <div id="item-00" class="flexbox-item item-00"> </div>
+        <div id="item-00" class="flexbox-item item-00"></div>
         <div id="item-01" class="flexbox-item item-01"> </div>
         <div id="item-02" class="flexbox-item item-02"> </div>
         <div id="item-03" class="flexbox-item item-03"> </div>
