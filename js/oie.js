@@ -10,6 +10,7 @@ var nblances = 0;
 var joueurs=[];
 var jact=0;
 
+
 var couleurs=[ "#123456" , "#654321" , "#465423" , "#872322"];
 
 const sleep = (milliseconds) => {
@@ -175,6 +176,7 @@ function deplacement_oie(debut,fin,pas=1){
 }
 */
 
+/*
 function deplacement_oie(debut,fin,pas=1){
     //alert("debut : "+debut+" , fin : "+fin);
     //alert("tout debut deplacement oie : case = "+joueurs[jact].case);
@@ -200,9 +202,40 @@ function deplacement_oie(debut,fin,pas=1){
     }
     window.requestAnimationFrame(boucle_dep);
 }
+*/
+function deplacement_oie(de1,de2){
+    //joueurs[jact]
+    var sd=de1+de2;
+    var bg=0;
+    var pas=1;
+    window.requestAnimationFrame(avancer);
 
+    //
+    function avancer(){
+        suppr_actif();
+        joueurs[jact].case+=pas;
+        if(joueurs[jact].case>=63){
+            pas=-1
+            joueurs[jact].case=63;
+        }
+        make_actif();
+        //
+        bg++;
+        if(bg<sd){
+            sleep(300).then(() => {
+                window.requestAnimationFrame(avancer);
+            })
+        }
+        else{
+            if(joueurs[jact].case==63){
+                gagne=true;
+            }
+            window.animfini=true;
+        }
+    }
+}
 
-async function lancer_des(){
+function lancer_des(){
     var dt=new Date();
     var dtt=new Date();
     var ad=dt.getTime();
@@ -228,21 +261,19 @@ async function lancer_des(){
                 av+=randint(1,5);
             }
             sleep(td).then(() => {
-                //window.requestAnimationFrame(boucle);
+                window.requestAnimationFrame(boucle);
             })
         }
         else{
-            document.getElementById("finitde").innerHTML="pas lancés"
-            return vd1,vd2;
+            document.getElementById("finitde").innerHTML="pas lancés";
+            suite_de();
         }
     }
     boucle();
 }
 
 
-
-async function jeu(){
-    await lancer_des();
+function suite_de(){
     var de1=parseInt(document.getElementById("dé1").innerHTML)
     var de2=parseInt(document.getElementById("dé2").innerHTML)
     //alert(de1+" "+de2);
@@ -250,6 +281,13 @@ async function jeu(){
     document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
     document.getElementById("nblancers").innerHTML = joueurs[jact].nblances;
     fonction_1(de1,de2);
+}
+
+function jeu(){
+    if (window.animfini==false) return;
+    if(true){
+        lancer_des();
+    }
 }
 
  /*
@@ -288,11 +326,16 @@ function jeu()
 
 
 function fonction_1(de1=null,de2=null){
+    document.getElementById("bjouer").setAttribute("onclick","console.log('aa')");
+    //alert(document.getElementById("bjouer").getAttribute("onclick"));
     if (!gagne) {
         if(de1==null || de2==null){
             de1=0;
             de2=0;
         }
+        window.animfini=false;
+        deplacement_oie(de1,de2);
+        /*
         var caseActiveChaine = (joueurs[jact].case < 10 ? '0' : '') + joueurs[jact].case;
         if (joueurs[jact].nblances == 0 && de1 + de2 == 9) {
             if ((de1 == 6 && de2 == 3) || (de1 == 3 && de2 == 6)) {
@@ -329,12 +372,14 @@ function fonction_1(de1=null,de2=null){
             elementActif = document.getElementById("item-63");
         }
         document.getElementById("caseActive").innerHTML = joueurs[jact].case;
+        */
     } else {
-        //alert("Vous avez gagné la partie, pour en recommencer une nouvelle, veuillez recharger la page");
+        alert("Vous avez gagné la partie, pour en recommencer une nouvelle, veuillez recharger la page");
     }
     jact++;
     if(jact>=joueurs.length){ jact=0; }
     update_aff_js();
+    document.getElementById("bjouer").setAttribute("onclick","jeu();");
 };
 
 var fonction_2 = function() {
