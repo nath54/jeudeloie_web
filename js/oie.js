@@ -17,6 +17,20 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
+function est_dans_liste(valeur,liste){
+    return liste.includes(valeur);
+}
+
+function enlever_de_liste(valeur,liste){
+    for(i=0;i<liste.length;x++){
+        if(valeur===liste[i]){
+            liste.splice(i, 1);
+            return ;
+        }
+    }
+    return ;
+}
+
 function update_aff_js(){
     var dddd=document.getElementById("joueurs");
     //DELETE
@@ -58,7 +72,7 @@ function update_aff_js(){
 function init_joueurs(){
     var parameters = location.search.substring(1).split("&");
     for(p of parameters){
-        var jj={name:null,img:null,case:0,actif:null,nblances:0};
+        var jj={name:null,img:null,case:0,actif:null,nblances:0,etats:[],already_immobilise:false};
         var pjs=p.split(",");
         for(pp of pjs){
             var ppp=pp.split("=");
@@ -208,29 +222,80 @@ function deplacement_oie(de1,de2){
     var sd=de1+de2;
     var bg=0;
     var pas=1;
+    if( est_dans_liste("recule",joueurs[jact].etats) ){
+        pas=-1;
+        enlever_de_liste("recule",joueurs[jact].etats);
+    }
+    //
+    if( est_dans_liste("immobilisé",joueurs[jact].etats) ){
+        bg=sd;
+        enlever_de_liste("immobilisé",joueurs[jact].etats);
+        joueurs[jact].already_immobilise=true;
+    }
+    else{
+        joueurs[jact].already_immobilise=false;
+    }
+    //
     window.requestAnimationFrame(avancer);
 
     //
     function avancer(){
-        suppr_actif();
-        joueurs[jact].case+=pas;
-        if(joueurs[jact].case>=63){
-            pas=-1
-            joueurs[jact].case=63;
-        }
-        make_actif();
-        //
-        bg++;
+        
         if(bg<sd){
+            //
+            suppr_actif();
+            joueurs[jact].case+=pas;
+            if(joueurs[jact].case>=63){
+                pas=-1
+                joueurs[jact].case=63;
+            }
+            if(joueurs[jact].case<=0){
+                pas=1;
+                joueurs[jact].case=0;
+            }
+            make_actif();
+            //
+            bg++;
             sleep(300).then(() => {
                 window.requestAnimationFrame(avancer);
             })
         }
         else{
-            if(joueurs[jact].case==63){
+            //
+            jact++;
+            if(jact>=joueurs.length){ jact=0; }
+            //
+            var cond=true;
+            if(cond && joueurs[jact].case==63){
                 gagne=true;
+                cond=false;
+                alert(joueurs[jact].name+" a gagné !  =)")
+                document.getElementById("gagne_aff").innerHTML=joueurs[jact].name+" a gagné !";
             }
+            if(cond && joueurs[jact].case==62){
+                cond=false;
+                alert("Dommage, "+joueurs[jact].name+", tu retournes à la case départ.  =(");
+                suppr_actif();
+                joueurs[jact].case=0;
+                make_actif();
+            }
+            if(cond && joueurs[jact].case%10==0){
+                alert("Dommage, "+joueurs[jact].name+", tu va reculer la prochaine fois que tu va jouer.  :(");
+                joueurs[jact].etats.push("recule");
+            }
+            if(cond && joueurs[jact].case==13 && !joueurs[jact].already_immobilise==false){
+                alert("Dommage, "+joueurs[jact].name+", tu est immobilisé pendant 2 tours.  8-(");
+                for(x=0;x<2;x++){ joueurs[jact].etats.push("immobilise"); }
+            }
+            if(cond && joueurs[jact].case==26 && !joueurs[jact].already_immobilise==false){
+                alert("Dommage, "+joueurs[jact].name+", tu est immobilisé pendant 3 tours.  8-(");
+                for(x=0;x<3;x++){ joueurs[jact].etats.push("immobilise"); }
+            }
+            //
             window.animfini=true;
+            //
+            update_aff_js();
+            //
         }
     }
 }
@@ -238,6 +303,8 @@ function deplacement_oie(de1,de2){
 function lancer_des(){
     var dt=new Date();
     var dtt=new Date();
+    var tpfin=1000;
+    var ddeb=dt.getTime();
     var ad=dt.getTime();
     var td=randint(1,10);
     var vd1=parseInt(randint(1,6));
@@ -247,22 +314,29 @@ function lancer_des(){
     document.getElementById("dé2").innerHTML=vd2;
     document.getElementById("finitde").innerHTML="lancés..."
     function boucle(){
-        if(td<1000){
-            dt=new Date();
-            if(dt.getTime()-ad>=td){
-                ad=dt.getTime();
-                document.getElementById("dé1").innerHTML=vd1;
-                document.getElementById("dé2").innerHTML=vd2;
-                vd1++;
-                if(vd1>6){vd1=1}
-                vd2++;
-                if(vd2>6){vd2=1}
-                td+=av;
-                av+=randint(1,5);
+        if(!document.getElementById("check_pass").checked){
+            var ddt=new Date();
+            if(ddt.getTime()-ddeb<tpfin){
+                dt=new Date();
+                if(dt.getTime()-ad>=td){
+                    ad=dt.getTime();
+                    document.getElementById("dé1").innerHTML=vd1;
+                    document.getElementById("dé2").innerHTML=vd2;
+                    vd1++;
+                    if(vd1>6){vd1=1}
+                    vd2++;
+                    if(vd2>6){vd2=1}
+                    td+=av;
+                    av+=randint(1,5);
+                }
+                sleep(td).then(() => {
+                    window.requestAnimationFrame(boucle);
+                })
             }
-            sleep(td).then(() => {
-                window.requestAnimationFrame(boucle);
-            })
+            else{
+                document.getElementById("finitde").innerHTML="pas lancés";
+                suite_de();
+            }
         }
         else{
             document.getElementById("finitde").innerHTML="pas lancés";
@@ -326,7 +400,6 @@ function jeu()
 
 
 function fonction_1(de1=null,de2=null){
-    document.getElementById("bjouer").setAttribute("onclick","console.log('aa')");
     //alert(document.getElementById("bjouer").getAttribute("onclick"));
     if (!gagne) {
         if(de1==null || de2==null){
@@ -376,10 +449,7 @@ function fonction_1(de1=null,de2=null){
     } else {
         alert("Vous avez gagné la partie, pour en recommencer une nouvelle, veuillez recharger la page");
     }
-    jact++;
-    if(jact>=joueurs.length){ jact=0; }
-    update_aff_js();
-    document.getElementById("bjouer").setAttribute("onclick","jeu();");
+    
 };
 
 var fonction_2 = function() {
