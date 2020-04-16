@@ -120,10 +120,16 @@ body {
 }
 
 .pion{
+    /*
     min-width: 15%;
     min-height: 15%;
     max-width: 50%;
     max-height: 50%;
+    */
+    min-width:25px;
+    min-height:25px;
+    max-width:50px;
+    max-height:50px;
     display:flex;
     border:2px solid black;
     border-radius: 10px;
