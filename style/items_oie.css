@@ -1,16 +1,12 @@
 
 .item-00 {
-    min-height: 150px;
-    min-width: 150px;
-    max-height: 2000px;
-    max-width: 200px;
+    height: 100px;
+    width: 100px;
 }
 
 .item-01 , .item-02 , .item-03{
-    min-height: 100px;
-    min-width: 100px;
-    max-height: 150px;
-    max-width: 150px;
+    height: 90px;
+    width: 90px;
 }
 
 .item-13{

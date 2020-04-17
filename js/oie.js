@@ -261,9 +261,7 @@ function deplacement_oie(de1,de2){
             })
         }
         else{
-            //
-            jact++;
-            if(jact>=joueurs.length){ jact=0; }
+            
             //
             var cond=true;
             if(cond && joueurs[jact].case==63){
@@ -283,19 +281,26 @@ function deplacement_oie(de1,de2){
                 alert("Dommage, "+joueurs[jact].name+", tu va reculer la prochaine fois que tu va jouer.  :(");
                 joueurs[jact].etats.push("recule");
             }
-            if(cond && joueurs[jact].case==13 && !joueurs[jact].already_immobilise==false){
+            if(cond && joueurs[jact].case==13 && !joueurs[jact].already_immobilise){
                 alert("Dommage, "+joueurs[jact].name+", tu est immobilisé pendant 2 tours.  8-(");
                 for(x=0;x<2;x++){ joueurs[jact].etats.push("immobilise"); }
             }
-            if(cond && joueurs[jact].case==26 && !joueurs[jact].already_immobilise==false){
+            if(cond && joueurs[jact].case==26 && !joueurs[jact].already_immobilise){
                 alert("Dommage, "+joueurs[jact].name+", tu est immobilisé pendant 3 tours.  8-(");
                 for(x=0;x<3;x++){ joueurs[jact].etats.push("immobilise"); }
+            }
+            if(cond && joueurs[jact].case==39 && !joueurs[jact].already_immobilise){
+                alert("Dommage, "+joueurs[jact].name+", tu est immobilisé pendant 1 tours.  8-(");
+                for(x=0;x<1;x++){ joueurs[jact].etats.push("immobilise"); }
             }
             //
             window.animfini=true;
             //
             update_aff_js();
             //
+            //
+            jact++;
+            if(jact>=joueurs.length){ jact=0; }
         }
     }
 }
