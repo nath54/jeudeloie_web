@@ -5,6 +5,7 @@ No Copyrights ;)
 html,
 body {
   width: 100%;
+  height:300%;
 }
 body {
     background-color: #8e44ad;
@@ -78,6 +79,7 @@ body {
 
 
 .flexbox-container {
+    position:relative;
     /* background-color: #00652f; */
     background: linear-gradient( to bottom, #5d9634, #5d9634 50%, #538c2b 50%, #538c2b);
     background-size: 100% 25px;
@@ -118,6 +120,7 @@ body {
 }
 
 #joueurs{
+    position:relative;
     height:220px;
     border:2px solid black;
     border-radius:5px;
@@ -165,3 +168,24 @@ td{
     max-width:200px;
     max-height:200px; 
 }
+
+
+
+.restalecran{
+    background: linear-gradient(to bottom, rgba(255,255,255,1),rgba(155,155,155,0.5));
+    border:2px solid black;
+    width:100%;
+    height:350px;
+    top:0;
+    position:fixed;
+    overflow:auto;
+}
+
+.contenu{
+    position:relative;
+    overflow: auto;
+    top:350px;
+}
+
+body { font-family: trebuchet ms,arial,tahoma,verdana,sans-serif;}
+

@@ -462,4 +462,22 @@ var fonction_2 = function() {
 };
 
 
-initialisation();
+/*
+window.onscroll = function() {
+    var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
+    if(scroll>30)
+        document.getElementById('restalecran').style.top = scroll+'px';
+    else if(scroll<30 || scroll == 30)
+    document.getElementById('restalecran').style.top = '30px';
+}
+*/
+
+
+
+
+
+
+
+
+
+
