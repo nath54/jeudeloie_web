@@ -1,6 +1,10 @@
 
 var nbj=1;
-var nbj_max=4;
+var nbj_max=5;
+
+var ch=["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
+
+function rch(lst){ return lst[parseInt(Math.random()*lst.length)]; }
 
 function new_joueur(){
      
@@ -11,18 +15,21 @@ function new_joueur(){
         ljs.push(j);
         len++;
     }
+    if(ljs.length>=nbj_max){
     js=ljs;
-    //alert("len : "+len);
-    //alert((len>=nbj_max)+" "+len+" "+nbj_max);
-    if(len>=nbj_max){
-        alert("Vous êtes déjà beaucoup trop a jouer !");
+    //alert("len : "+len);value="#132456">jà beaucoup trop a jouer !");
     }
     else{
+        var rcl="#"+rch(ch)+rch(ch)+rch(ch)+rch(ch)+rch(ch)+rch(ch);
         var jn=len+1;
         //alert(jn+" "+js);
         var d1=document.createElement("div");
         d1.setAttribute("id","j"+jn);
         d1.setAttribute("class","user");
+        var d2=document.createElement("div");
+        d2.setAttribute("style","border:5px solid "+rcl+"; border-radius:10px; margin:5px; padding:5px;")
+        d2.setAttribute("id","ed"+jn);
+        d1.appendChild(d2);
         var i1=document.createElement("img");
         i1.setAttribute("src","imgs/skin_1.png");
         i1.setAttribute("class","img_oie");
@@ -33,9 +40,23 @@ function new_joueur(){
         var inp1=document.createElement("input");
         inp1.setAttribute("value","player"+jn);
         inp1.setAttribute("id","name"+jn);
-        d1.appendChild(i1);
-        d1.appendChild(t1);
-        d1.appendChild(inp1);
+        d2.appendChild(i1);
+        var pp1=document.createElement("p");
+        pp1.appendChild(t1);
+        pp1.appendChild(inp1);
+        var t2=document.createElement("h2");
+        var i2=document.createElement("input");
+        t2.innerHTML="Couleur : ";
+        i2.setAttribute("type","color");
+        i2.setAttribute("id","cl"+jn);
+        i2.setAttribute("onchange","changecljoueur("+jn+")");
+        i2.setAttribute("value",rcl);
+        var pp2=document.createElement("p");
+        pp2.appendChild(t2);
+        pp2.appendChild(i2);
+        d2.appendChild(pp1);
+        d2.appendChild(pp2);
+        
         var ddd=document.getElementById("joueurs");
         ddd.appendChild(d1);
     }
@@ -74,14 +95,15 @@ function jouer(){
         len++;
     }
     txt="oie.html?"
-    js=ljs;
     x=1;
     for(j of ljs){
         var jnom=document.getElementById("name"+x).value;
         var jimg=document.getElementById("img"+x).src;
-        jnom=jnom.replace("&"," et ");
+        var jcl=document.getElementById("cl"+x).value;
+        while(jnom.includes("&")){ jnom=jnom.replace("&"," et "); }
         txt+="name="+jnom+",";
-        txt+="img="+jimg;
+        txt+="img="+jimg+",";
+        txt+="couleur="+jcl.split("#")[1];
         txt+="&";
         x++;
     }
@@ -100,3 +122,10 @@ function change_img(j){
     i.setAttribute("src",nsrc);
     //alert(nsrc);
 }
+
+
+function changecljoueur(ii){
+    var cl=document.getElementById("cl"+ii).value;
+    document.getElementById("ed"+ii).style.borderColor=cl;
+}
+

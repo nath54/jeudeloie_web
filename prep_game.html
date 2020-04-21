@@ -9,8 +9,11 @@
 <body>
     <div id="joueurs">
         <div class="user" id="j1">
-            <img class="img_oie" id="img1" src="imgs/skin_1.png" onclick="change_img(1);"></img>
-            <h2>Pseudo : </h2><input id="name1" type="text" value="player1"></input>
+            <div id="ed1" style="border:5px solid #132456; border-radius:10px; margin:5px; padding:5px;">
+                <img class="img_oie" id="img1" src="imgs/skin_1.png" onclick="change_img(1);"></img>
+                <p><h2>Pseudo : </h2><input id="name1" type="text" value="player1"></input></p>
+                <p><h2>Couleur : </h2><input type="color" id='cl1' onchange="changecljoueur(1);" value="#132456"></input></p>
+            </div>
         </div>
     </div>
     <button id="addj" onclick="new_joueur();">Ajouter un joueur</button>

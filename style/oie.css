@@ -30,7 +30,6 @@ body {
 
 
 .flexbox-dice {
-    width: 75%;
     background-color: #ffffff;
     border: 3px solid #272727;
     color: #000000;
@@ -43,8 +42,8 @@ body {
     max-height: 50px;
     max-width: 50px;
     */
-    width:100px;
-    height:100px;
+    width: 50px;
+    height:50px;
     display: inline-block;
     margin-left: 20px;
     text-align: center;
@@ -189,3 +188,25 @@ td{
 
 body { font-family: trebuchet ms,arial,tahoma,verdana,sans-serif;}
 
+@keyframes ad{
+    from{ background-position: -50px -50px; }
+    to{ background-position: 20px 50px; }
+}
+
+#bjouer{
+    background-image: url("../imgs/dices.jpg");
+    background-color: #000000;
+    background-size: 100% 120%;
+    color:red;
+    text-shadow: blue;
+    text-decoration: double;
+    font-size: 30px;
+    font-weight: bold;
+    width: 300px;
+    height: 50px;
+    position: relative;
+    border:2px solid red;
+    border-radius: 25px;
+    animation: ad 2s linear infinite;
+    background-repeat: no-repeat;
+}

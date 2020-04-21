@@ -11,7 +11,7 @@ var joueurs=[];
 var jact=0;
 
 
-var couleurs=[ "#123456" , "#654321" , "#465423" , "#872322"];
+var couleurs=[ "#123456" , "#654321" , "#465423" , "#872322" ,"#452484"];
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -51,7 +51,7 @@ function update_aff_js(){
         //
         dd.setAttribute("id","div_joueur_"+x);
         dd.setAttribute("class","joueur_aff");
-        dd.style.borderColor=couleurs[x];
+        dd.style.borderColor=j.cl;
         dd.style.borderWidth="5px";
         
         tt.innerHTML=j.name;
@@ -71,8 +71,11 @@ function update_aff_js(){
 
 function init_joueurs(){
     var parameters = location.search.substring(1).split("&");
+    var ki=-1;
+    console.log(parameters);
     for(p of parameters){
-        var jj={name:null,img:null,case:0,actif:null,nblances:0,etats:[],already_immobilise:false};
+        ki++;
+        var jj={name:null,img:null,case:0,actif:null,nblances:0,etats:[],already_immobilise:false,cl:couleurs[ki]};
         var pjs=p.split(",");
         for(pp of pjs){
             var ppp=pp.split("=");
@@ -83,11 +86,15 @@ function init_joueurs(){
             else if(ppp[0]=="img"){
                 jj.img=ppp[1];
             }
+            else if(ppp[0]=="couleur"){
+                jj.cl="#"+ppp[1];
+            }
+
         }
         if(jj.name!=null || jj.img!=null || jj.name!=undefined || jj.img!=undefined){
             var ddiv = document.createElement("div");
             ddiv.setAttribute("class","pion");
-            ddiv.style.borderColor=couleurs[joueurs.length];
+            ddiv.style.borderColor=jj.cl;
             ddiv.style.borderWidth="5px";
             var ii=document.createElement("img");
             ii.setAttribute("class","im_pion");
