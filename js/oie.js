@@ -95,6 +95,8 @@ function init_joueurs(){
             ddiv.setAttribute("class","pion");
             ddiv.style.borderColor=jj.cl;
             ddiv.style.borderWidth="5px";
+            ddiv.style.width=""+parseInt(80/joueurs.length)+"%";
+            ddiv.style.height=""+parseInt(80/joueurs.length)+"%";
             var ii=document.createElement("img");
             ii.setAttribute("class","im_pion");
             ii.setAttribute("src",jj.img);
@@ -114,9 +116,13 @@ function initialisation() {
         xx = (x < 10 ? '0' : '') + x;
         var c = document.getElementById("item-" + xx);
         if (c != null) {
-            if (x != 0) { c.innerHTML = xx; } else { c.innerHTML = "départ"; }
+            //if (x != 0) { c.innerHTML = xx; } else { c.innerHTML = "départ"; }
             var color = "rgb(" + parseInt(100 + parseInt(x / 63 * 150)) + "," + parseInt(250 - parseInt(x / 63 * 150)) + "," + "00" + ")";
             c.style.backgroundColor = color;
+            var pp=document.createElement("p");
+            pp.innerHTML=(xx!="00" ? xx : "départ" );
+            pp.setAttribute("class","texte_case")
+            c.appendChild( pp );
         }
 
     }for(x=0;x<joueurs.length;x++){ make_actif(x); }

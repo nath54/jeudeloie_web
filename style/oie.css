@@ -130,20 +130,12 @@ body {
 }
 
 .pion{
-    /*
-    min-width:10px;
-    min-height:10px;
-    max-width: 40px;
-    max-height:40px;
-    */
     min-width: 15%;
     min-height: 15%;
     max-width: 40%;
     max-height: 40%;
-    
-    width:auto;
-    height:auto;
-    display:flex;
+    display:inline-block;
+    overflow-wrap: normal;
     border:2px solid black;
     border-radius: 10px;
     background-color: rgba(30,30,30,0.6);
@@ -210,3 +202,11 @@ body { font-family: trebuchet ms,arial,tahoma,verdana,sans-serif;}
     border-radius: 25px;
     background-repeat: no-repeat;
 }
+
+.texte_case{
+    text-align:center;
+}
+
+
+
+
