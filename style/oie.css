@@ -194,9 +194,10 @@ body { font-family: trebuchet ms,arial,tahoma,verdana,sans-serif;}
 }
 
 #bjouer{
-    background-image: url("../imgs/dices.jpg");
-    background-color: #000000;
-    background-size: 100% 120%;
+    background-image: url("../imgs/dices.gif");
+    background-color: #ffffff;
+    background-size: 50% 120%;
+    background-position: 50% 0;
     color:red;
     text-shadow: blue;
     text-decoration: double;
@@ -207,6 +208,8 @@ body { font-family: trebuchet ms,arial,tahoma,verdana,sans-serif;}
     position: relative;
     border:2px solid red;
     border-radius: 25px;
+    /*
     animation: ad 2s linear infinite;
+    */
     background-repeat: no-repeat;
 }
