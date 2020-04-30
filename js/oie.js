@@ -79,7 +79,6 @@ function init_joueurs(){
         var pjs=p.split(",");
         for(pp of pjs){
             var ppp=pp.split("=");
-            //alert("ppp : "+ppp);
             if(ppp[0]=="name"){
                 jj.name=ppp[1];
             }
@@ -117,34 +116,15 @@ function initialisation() {
         if (c != null) {
             if (x != 0) { c.innerHTML = xx; } else { c.innerHTML = "départ"; }
             var color = "rgb(" + parseInt(100 + parseInt(x / 63 * 150)) + "," + parseInt(250 - parseInt(x / 63 * 150)) + "," + "00" + ")";
-            //console.log("x : ", x, " color : ", color);
             c.style.backgroundColor = color;
         }
 
-    }
-    //var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
-    //elementActif = document.getElementById("item-" + caseActiveChaine);
-    //elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine + " active");
-    for(x=0;x<joueurs.length;x++){ make_actif(x); }
+    }for(x=0;x<joueurs.length;x++){ make_actif(x); }
     
 }
 
 function suppr_actif(idp=null){
     if(idp==null){ idp=jact; }
-    /*var caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
-    if (caseActive >= 0 && caseActive <= 63) {
-        //alert(caseActiveChaine);
-    }
-    else if(caseActive>63){
-        caseActiveChaine="63";
-    }
-    else{
-        caseActiveChaine="00";
-    }
-    var elementActif = document.getElementById("item-" + caseActiveChaine);
-    elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine);
-    */
-    //alert("suppr actif : case = "+joueurs[jact].case);
     var caseActiveChaine = (joueurs[idp].case < 10 ? '0' : '') + joueurs[idp].case;
     var elem=document.getElementById("item-"+caseActiveChaine);
     try{
@@ -158,14 +138,6 @@ function suppr_actif(idp=null){
 
 function make_actif(idp=null){
     if(idp==null){ idp=jact; }
-    /*
-    if (caseActive >= 0) {
-        caseActiveChaine = (caseActive < 10 ? '0' : '') + caseActive;
-        elementActif = document.getElementById("item-" + caseActiveChaine);
-        elementActif.setAttribute("class", "flexbox-item item-" + caseActiveChaine + " active");
-    };
-    */
-    //alert("make actif : case = "+joueurs[jact].case);
     var caseActiveChaine = (joueurs[idp].case < 10 ? '0' : '') + joueurs[idp].case;
     var elem=document.getElementById("item-"+caseActiveChaine);
     if(elem!=null){
@@ -173,57 +145,6 @@ function make_actif(idp=null){
     }
 }
 
-/*
-function deplacement_oie(debut,fin,pas=1){
-    var jact=jact;
-    //alert(jact);
-    var cc=debut;
-    console.log("deplacement oie( debut : "+debut+" , fin : "+fin+" , pas : "+pas);
-    
-    var nba=0;
-    function boucle_dep(){
-        nba+=pas;
-        suppr_actif();
-        cc+=1;
-        joueurs[jact].case=cc;
-        make_actif();
-        if(cc!=fin){
-            sleep(300).then(() => {
-                window.requestAnimationFrame(boucle_dep);
-            })
-        }
-    }
-    window.requestAnimationFrame(boucle_dep);
-}
-*/
-
-/*
-function deplacement_oie(debut,fin,pas=1){
-    //alert("debut : "+debut+" , fin : "+fin);
-    //alert("tout debut deplacement oie : case = "+joueurs[jact].case);
-    suppr_actif();
-    joueurs[jact].case=debut;
-    make_actif();
-    //alert("debut deplacement oie : case = "+joueurs[jact].case);
-    function boucle_dep(){
-        //alert("etape 1 deplacement oie : case = "+joueurs[jact].case);
-        suppr_actif();
-        if(pas==1){ joueurs[jact].case++; }
-        else if(pas==-1){ joueurs[jact].case--; }
-        else{ joueurs[jact].case=joueurs[jact].case+pas; }
-        make_actif();
-        update_aff_js();
-        //alert("etape 2 deplacement oie : case = "+joueurs[jact].case);
-        console.log("case : "+joueurs[jact].case);
-        if(joueurs[jact].case!=fin){
-            sleep(300).then(() => {
-                window.requestAnimationFrame(boucle_dep);
-            })
-        }
-    }
-    window.requestAnimationFrame(boucle_dep);
-}
-*/
 function deplacement_oie(de1,de2){
     //joueurs[jact]
     var sd=de1+de2;
@@ -301,7 +222,7 @@ function deplacement_oie(de1,de2){
                 for(x=0;x<1;x++){ joueurs[jact].etats.push("immobilise"); }
             }
             //
-            window.animfini=true;
+            window.tour_actu=true;
             //
             update_aff_js();
             //
@@ -370,119 +291,27 @@ function suite_de(){
 }
 
 function jeu(){
-    if (window.animfini==false) return;
-    if(true){
+    if (window.tour_actu==false) return;
+    else{
+        window.tour_actu=false;
         lancer_des();
     }
 }
 
- /*
-const jeu = async () => {
-    const result = await lancer_des();
-    // do something else here after firstFunction completes
-    var de1=parseInt(document.getElementById("dé1").innerHTML)
-    var de2=parseInt(document.getElementById("dé2").innerHTML)
-    //alert(de1+" "+de2);
-    nblances++;
-    document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
-    document.getElementById("nblancers").innerHTML = nblances;
-    fonction_1(de1,de2);
- }
- */
-
-/*
-function jeu()
-{
-    var promise = lancer_des();
-    promise.then(function(result) { 
-        var de1=parseInt(document.getElementById("dé1").innerHTML)
-        var de2=parseInt(document.getElementById("dé2").innerHTML)
-        //alert(de1+" "+de2);
-        nblances++;
-        document.getElementById("lancer").innerHTML = "(" + de1 + ", " + de2 + "= " + (de1 + de2) + ")";
-        document.getElementById("nblancers").innerHTML = nblances;
-        fonction_1(de1,de2);
-    });
-}
-*/
-
-
-
-
 
 
 function fonction_1(de1=null,de2=null){
-    //alert(document.getElementById("bjouer").getAttribute("onclick"));
     if (!gagne) {
         if(de1==null || de2==null){
             de1=0;
             de2=0;
         }
-        window.animfini=false;
         deplacement_oie(de1,de2);
-        /*
-        var caseActiveChaine = (joueurs[jact].case < 10 ? '0' : '') + joueurs[jact].case;
-        if (joueurs[jact].nblances == 0 && de1 + de2 == 9) {
-            if ((de1 == 6 && de2 == 3) || (de1 == 3 && de2 == 6)) {
-                joueurs[jact].case = 29;
-            } else if ((de1 == 4 && de2 == 5) || (de1 == 5 && de2 == 4)) {
-                joueurs[jact].case = 53;
-            }
-        } else {
-            //suppr_actif(caseActive);
-
-            // On calcule la nouvelle position active
-            joueurs[jact].case += de1 + de2;
-            if(joueurs[jact].case<=63){
-                deplacement_oie(joueurs[jact].case-de1-de2,joueurs[jact].case,1);
-            }
-            if(joueurs[jact].case > 63) {
-                deplacement_oie(joueurs[jact].case-de1-de2,63,1);
-                var ncas=63 - (joueurs[jact].case - 63);
-                deplacement_oie(63,ncas,-1);
-                joueurs[jact].case = ncas;
-                //alert("superior " + caseActive)
-            }
-            if (joueurs[jact].case == 63) {
-                //alert("Vous avez gagné !")
-                gagne = jact;
-            }
-        }
-        //console.log("caseActive : " + caseActive)
-        if (joueurs[jact].case <= 63) {
-            // On recherche le nouvel élément actif.
-            //make_actif();
-            //console.log(" caseActiveChaine : "+caseActiveChaine);
-        } else {
-            elementActif = document.getElementById("item-63");
-        }
-        document.getElementById("caseActive").innerHTML = joueurs[jact].case;
-        */
     } else {
         alert("Vous avez gagné la partie, pour en recommencer une nouvelle, veuillez recharger la page");
     }
     
 };
-
-var fonction_2 = function() {
-
-};
-
-
-/*
-window.onscroll = function() {
-    var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
-    if(scroll>30)
-        document.getElementById('restalecran').style.top = scroll+'px';
-    else if(scroll<30 || scroll == 30)
-    document.getElementById('restalecran').style.top = '30px';
-}
-*/
-
-
-
-
-
 
 
 
